@@ -16,16 +16,34 @@ body {
 <script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
 <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 
+
 <div id="⚛️"></div>
 
 <script type="text/babel">
+
 
 class Pager extends React.Component {
   static defaultProps = {
     items: [],
     itemsPerPage: 5,
-    currentPage: 1,
-    maxPagesInPageNav: 3
+    defaultCurrentPage: 1,
+    maxPagesInPageNav: 3,
+    onSetCurrentPage: () => {}
+  };
+
+  initialState = {currentPage: this.props.defaultCurrentPage};
+  state = this.initialState;
+
+  setCurrentPage = (page) => {
+    if (!this.isCurrentPageControlled()) {
+      this.setState({currentPage: page}, () => {
+        this.props.onSetCurrentPage(this.state.currentPage);
+      });
+    }
+  }
+
+  isCurrentPageControlled() {
+    return this.props.currentPage !== undefined;
   }
 
   static getPages = (totalPages, currentPage, maxPages) => {
@@ -73,7 +91,12 @@ class Pager extends React.Component {
 
   getPagerProps = () => {
     const { render, ...props } = this.props;
-    const { items, itemsPerPage, currentPage, maxPagesInPageNav } = props;
+    const { items, itemsPerPage, maxPagesInPageNav } = props;
+
+    const currentPage = this.isCurrentPageControlled()
+      ? this.props.currentPage
+      : this.state.currentPage;
+
     if (!items.length) {
       return {
         items: [],
@@ -103,7 +126,10 @@ class Pager extends React.Component {
 
   }
   render() {
-    return this.props.render({...this.getPagerProps()})
+    return this.props.render({
+      ...this.getPagerProps(),
+      setCurrentPage: this.setCurrentPage
+    })
   }
 }
 
@@ -153,17 +179,18 @@ ConnectedPager.contextTypes = {
     PropTypes.object.isRequired,
 }
 
-function BlogNav({setPage}) {
+function BlogNav() {
   return (
     <ConnectedPager
       render={pager => {
-        const { pages, previous, next, totalPages } = pager;
+        const { pages, previous, next, totalPages, setCurrentPage } = pager;
+        const setPageCB = (currentPage) => {console.log('just set page', currentPage)}
         return (
           <div>
             {previous &&
               <span
                 style={{marginRight: 10}}
-                onClick={() => { setPage(previous) }}>
+                onClick={() => { setCurrentPage(previous, setPageCB) }}>
                 «
               </span>
             }
@@ -177,14 +204,14 @@ function BlogNav({setPage}) {
                 <span
                   key={index}
                   style={{marginRight: 10}}
-                  onClick={() => { setPage(newPage) }}>
+                  onClick={() => { setCurrentPage(newPage, setPageCB) }}>
                   {page}
                 </span>
               )
             })}
             {next &&
               <span
-                onClick={() => { setPage(next) }}>
+                onClick={() => { setCurrentPage(next, setPageCB) }}>
                 »
               </span>
             }
@@ -242,7 +269,7 @@ function PageBody({setPage}) {
   return (
     <div>
       <BlogContent />
-      <BlogNav setPage={setPage} />
+      <BlogNav />
     </div>
   );
 }
@@ -253,39 +280,23 @@ const posts = Array.from({length: 50}, (_, i) => {
   }
 })
 
-class Blog extends React.Component {
-  static defaultProps = {
-    defaultPage: 1,
-    defaultPosts: posts
-  };
-  initialState = {
-    currentPage: this.props.defaultPage,
-    posts: this.props.defaultPosts
-  };
-  state = this.initialState;
-
-  setPage = (page) => {
-    this.setState({currentPage: page});
-  }
-
-  render() {
-    return (
-      <PagerProvider
-        items={this.state.posts}
-        itemsPerPage={5}
-        currentPage={this.state.currentPage}
-        maxPagesInPageNav={3}
-      >
-        <Header />
-        <PageBody setPage={this.setPage} />
-      </PagerProvider>
-    )
-  }
+function Blog(){
+  return (
+    <PagerProvider
+      items={posts}
+      itemsPerPage={5}
+      maxPagesInPageNav={3}
+    >
+      <Header />
+      <PageBody />
+    </PagerProvider>
+  )
 }
-
+/*
 ReactDOM.render(
   <Blog />,
   document.getElementById('⚛️'),
 )
+*/
 </script>
 </body>
