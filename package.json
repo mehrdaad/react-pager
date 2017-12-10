@@ -1,6 +1,6 @@
 {
   "name": "react-basic-pager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A component that handles the business logic of navigating paginated content and leaves rendering to the user.",
   "main": "build/index.js",
   "directories": {
