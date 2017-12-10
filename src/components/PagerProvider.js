@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import Pager from './Pager';
 
-class PagerProvider extends React.Component {
+class PagerProvider extends Component {
   static contextName = '__pager__'
-  static Renderer = class extends React.Component {
+  static Renderer = class extends Component {
     static childContextTypes = {
       [PagerProvider.contextName]:
         PropTypes.object.isRequired,

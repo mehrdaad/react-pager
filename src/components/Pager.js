@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 
-class Pager extends React.Component {
+class Pager extends Component {
   static defaultProps = {
     items: [],
     itemsPerPage: 5,
     defaultCurrentPage: 1,
-    maxPagesInPageNav: 3,
-    onSetCurrentPage: () => {}
+    maxPagesInPageNav: 3
   };
 
   initialState = {currentPage: this.props.defaultCurrentPage};
   state = this.initialState;
 
-  setCurrentPage = (page) => {
+  setCurrentPage = (page, callback) => {
     if (!this.isCurrentPageControlled()) {
       this.setState({currentPage: page}, () => {
-        this.props.onSetCurrentPage(this.state.currentPage);
+        callback && callback(this.state.currentPage);
       });
     }
   }
