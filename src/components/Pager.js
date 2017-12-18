@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Pager extends Component {
   static defaultProps = {
     items: [],
-    itemsPerPage: 5,
+    itemsPerPage: 10,
     defaultCurrentPage: 1,
     maxPagesInPageNav: 3
   };
