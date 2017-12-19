@@ -84,7 +84,7 @@ All examples are live and editable on [Code Sandbox](https://codesandbox.io/).
   * [Pass In Current Page As Prop](https://codesandbox.io/s/m373o33nj9)
   * [Pass In All Props Dynamically](https://codesandbox.io/s/309o24070m)
 
-## <PagerProvider/>
+## PagerProvider
 
 ### Props
 
@@ -121,7 +121,7 @@ This determines the maximum number of pages in the `pages` property, which is pa
 
 If you omit `currentPage`, the provider will manage the current page state for you. `currentPage` will be initialized to 1 and can be updated via a method, `setCurrentPage`, that will be passed to connected components along with the pagination state.
 
-## <ConnectedPager/>
+## ConnectedPager
 
 ### Props
 
