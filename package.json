@@ -3,16 +3,13 @@
   "version": "1.0.2",
   "description": "A component that handles the business logic of navigating paginated content and leaves rendering to the user.",
   "main": "build/index.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
     "watch": "webpack -w",
     "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jmbyerly/react-pager.git"
+    "url": "https://github.com/jmbyerly/react-basic-pager.git"
   },
   "keywords": [
     "react",
@@ -25,13 +22,12 @@
     "prop-types": ">=15"
   },
   "bugs": {
-    "url": "https://github.com/jmbyerly/react-pager/issues"
+    "url": "https://github.com/jmbyerly/react-basic-pager/issues"
   },
-  "homepage": "https://github.com/jmbyerly/react-pager#readme",
+  "homepage": "https://github.com/jmbyerly/react-basic-pager#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "babel-plugin-minify-dead-code-elimination": "^0.2.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
