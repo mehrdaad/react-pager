@@ -68,11 +68,16 @@ class Pager extends Component {
 
   getPagerProps = () => {
     const { render, ...props } = this.props;
-    const { items, itemsPerPage, maxPagesInPageNav } = props;
+    let { items, itemsPerPage, maxPagesInPageNav } = props;
+    itemsPerPage = parseInt(itemsPerPage, 10);
+    maxPagesInPageNav = parseInt(maxPagesInPageNav, 10);
 
-    const currentPage = this.isCurrentPageControlled()
-      ? this.props.currentPage
-      : this.state.currentPage;
+    const currentPage = parseInt(
+      this.isCurrentPageControlled()
+        ? this.props.currentPage
+        : this.state.currentPage,
+      10
+    );
 
     if (!items.length) {
       return {
